@@ -24,6 +24,9 @@ Welcome to Fiverr Clone, a dynamic freelance marketplace designed to connect cli
 
 - **Media Storage:** Seamlessly store images and videos using Cloudinary for efficient content management.
 
+## Demo
+https://www.linkedin.com/posts/anurag-dalsaniya-48a48b254_fiverrclone-reactjs-nodejs-activity-7128618535349612544-Y9U3?utm_source=share&utm_medium=member_android
+
 ## Tech Stack
 - SCSS
 - React.js
