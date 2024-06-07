@@ -60,3 +60,5 @@ npm start
 
 
 Make sure to replace placeholder values like `yourusername`, `your_mongodb_connection_string`, `your_stripe_api_key`, `your_cloudinary_api_key`, and `your_cloudinary_api_secret` with the actual values for your project. Additionally, you might want to include additional sections like "Deployment," "Testing," or any other relevant information specific to your project.
+
+Deploy it to GitHub
