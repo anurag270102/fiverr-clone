@@ -1,5 +1,5 @@
 import express from "express";
-import {deleteUser,getUser} from '../../api/controller/user.controller.js'
+import {deleteUser,getUser} from '../controller/user.controller.js'
 import { verifyToken } from "../middelware/jwt.js";
 
 const router =express.Router();
