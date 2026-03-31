@@ -73,7 +73,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: client
-        run: npm install
+        run: npm install --force
 
       - name: Build React App
         working-directory: client
