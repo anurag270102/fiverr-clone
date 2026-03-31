@@ -19,7 +19,7 @@ const Success = () => {
             }
         }
         makeRequest();
-    }, []);
+    },  [navigate, payment_intent]);
     return (
        [  <div className="cm">
       <img src="images/successfully-done.gif" alt="" />
