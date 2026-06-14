@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './success.scss'
 import { useEffect } from 'react';
 import newRequest from '../../utils/newRequest';
+import { toast } from 'react-toastify';
 const Success = () => {
     const { search } = useLocation();
     const navigate = useNavigate();
@@ -11,11 +12,13 @@ const Success = () => {
         const makeRequest = async () => {
             try {
                 await newRequest.put('/orders', { payment_intent });
+                toast.success("Payment confirmed. Redirecting to orders...");
                 setTimeout(() => {
                     navigate("orders");
                 }, 5000);
             } catch (error) {
-                console.log(error);
+                const message = error?.response?.data || "Unable to confirm payment.";
+                toast.error(message);
             }
         }
         makeRequest();

@@ -1,5 +1,7 @@
 import React from 'react';
 import './App.scss';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, Slide } from 'react-toastify';
 import Footer from './components/Footer/Footer';
 import Navbar from './components/Navbar/Navbar';
 import Add from './pages/add/Add';
@@ -36,6 +38,20 @@ function App() {
           <Outlet key={5454} />
           <hr></hr>
           <Footer key={6563}/>
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={true}
+            closeOnClick
+            pauseOnHover
+            draggable
+            transition={Slide}
+            toastClassName="custom-toast"
+            bodyClassName="custom-toast-body"
+            progressClassName="custom-toast-progress"
+            theme="light"
+          />
         </div>
       </QueryClientProvider>
     )

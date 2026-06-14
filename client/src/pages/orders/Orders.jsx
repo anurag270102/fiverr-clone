@@ -1,5 +1,6 @@
 import React from "react";
 import './orders.scss';
+import { toast } from 'react-toastify';
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
 import { useNavigate } from "react-router-dom";
@@ -21,13 +22,19 @@ const Orders = () => {
         const id = sellerId + buyerId;
         try {
             const res = await newRequest.get(`/conversations/single/${id}`);
-            navigate(`/message/${res.data.id}`)
-
+            navigate(`/message/${res.data.id}`);
+            toast.success("Opening conversation...");
         } catch (error) {
-            // console.log(error);
-            if (error.response.status===404) {
-                const res = await newRequest.post(`/conversations`, { to: currentUser.isSeller ? buyerId : sellerId });
-                navigate(`/message/${res.data.id}`)
+            if (error.response?.status === 404) {
+                try {
+                    const res = await newRequest.post(`/conversations`, { to: currentUser.isSeller ? buyerId : sellerId });
+                    navigate(`/message/${res.data.id}`);
+                    toast.success("Conversation created and opened.");
+                } catch (innerError) {
+                    toast.error("Unable to create a conversation.");
+                }
+            } else {
+                toast.error("Unable to open the conversation.");
             }
         }
     }

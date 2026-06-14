@@ -2,12 +2,11 @@ import Gig from '../models/gig.model.js';
 import createError from '../utils/createError.js';
 export const createGig = async (req, res, next) => {
   if (req.isSeller === false) { return next(createError(403, 'Only Seller Create a Gig')); }
-
+    
   const newGig = new Gig({
     userId: req.userId,
     ...req.body
   })
-  console.log(req.userId);
   try {
     const savedGig = await newGig.save();
     res.status(201).json(savedGig);

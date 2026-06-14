@@ -9,3 +9,52 @@ hr {
     height: 0px;
     border: 0.5px solid rgb(237, 235, 235);
 }
+
+.Toastify__toast-container {
+    width: 360px;
+}
+
+.custom-toast {
+    border-radius: 16px;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+    padding: 14px 16px;
+    color: #111827;
+}
+
+.custom-toast-body {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: #111827;
+    margin: 0;
+}
+
+.custom-toast-progress {
+    background: #2563eb;
+}
+
+.Toastify__toast--success {
+    border-left: 5px solid #22c55e;
+}
+
+.Toastify__toast--error {
+    border-left: 5px solid #ef4444;
+}
+
+.Toastify__toast--warning {
+    border-left: 5px solid #f59e0b;
+}
+
+.Toastify__toast-icon {
+    opacity: 0.9;
+}
+
+.Toastify__close-button {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.Toastify__toast-body {
+    padding: 0;
+}

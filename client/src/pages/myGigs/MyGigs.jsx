@@ -4,6 +4,7 @@ import "./myGigs.scss";
 import getCurrentUser from "../../utils/getCurrentUser";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
+import { toast } from 'react-toastify';
 
 function MyGigs() {
   const currentUser = getCurrentUser();
@@ -22,6 +23,10 @@ function MyGigs() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["myGigs"]);
+      toast.success("Gig deleted successfully.");
+    },
+    onError: () => {
+      toast.error("Unable to delete the gig. Please try again.");
     },
   });
 

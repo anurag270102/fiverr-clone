@@ -3,6 +3,7 @@ import React from "react";
 import newRequest from "../../utils/newRequest";
 import Review from "../review/Review";
 import "./reviews.scss";
+import { toast } from 'react-toastify';
 const Reviews = ({ gigId }) => {
 
   const queryClient = useQueryClient()
@@ -18,7 +19,11 @@ const Reviews = ({ gigId }) => {
       return newRequest.post("/reviews", review);
     },
     onSuccess:()=>{
-      queryClient.invalidateQueries(["reviews"])
+      queryClient.invalidateQueries(["reviews"]);
+      toast.success("Review submitted successfully.");
+    },
+    onError: () => {
+      toast.error("Failed to submit the review. Please try again.");
     }
   });
   const handleSubmit = (e) => {
