@@ -5,6 +5,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import newRequest from "../../utils/newRequest";
 import { useParams } from "react-router-dom";
 import CheckoutForm from "../../components/checkOutForm/CheckOutForm";
+import { toast } from 'react-toastify';
 const stripePromise = await loadStripe(
   "your key"
   );
@@ -22,7 +23,8 @@ const Pay = () => {
         );
         setClientSecret(res.data.clientSecret);
       } catch (err) {
-        console.log(err);
+        const message = err?.response?.data || "Unable to start payment. Please try again.";
+        toast.error(message);
       }
     };
     makeRequest();

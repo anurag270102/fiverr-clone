@@ -2,6 +2,7 @@ import React from "react";
 import './message.scss';
 import { Link, useParams } from "react-router-dom";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
+import { toast } from 'react-toastify';
 import newRequest from "../../utils/newRequest";
 const Message = () => {
   const { id } = useParams();
@@ -27,16 +28,25 @@ const Message = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["messages"]);
+      toast.success("Message sent successfully");
+    },
+    onError: () => {
+      toast.error("Unable to send message. Please try again.");
     },
   });
   console.log(currentUserData);
   const handleSubmit = (e) => {
     e.preventDefault();
+    const messageText = e.target[0].value.trim();
+    if (!messageText) {
+      toast.warn("Write a message before sending.");
+      return;
+    }
     mutation.mutate({
       conversationId: id,
-      desc: e.target[0].value,
+      desc: messageText,
     });
-    e.target[0].value = " "
+    e.target[0].value = "";
   };
   return ([
     <div className="message">

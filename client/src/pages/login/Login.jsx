@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import './login.scss';
 import newRequest from "../../utils/newRequest";
+import { toast } from 'react-toastify';
 const Login = () => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
@@ -14,9 +15,12 @@ const Login = () => {
             e.preventDefault();
             const res=await newRequest.post('/auth/login',{username,password});
             localStorage.setItem("currentUser",JSON.stringify(res.data));
+            toast.success("Logged in successfully.");
             navigate('/');
         } catch (err) {
-            setError(err.response.data);
+            const message = err?.response?.data || "Login failed. Please try again.";
+            setError(message);
+            toast.error(message);
         }
 
     }

@@ -3,6 +3,7 @@ import './add.scss';
 import { INITIAL_STATE, gigReducer } from "../../reducers/gigReducers";
 import upload from '../../utils/upload.js';
 import { useQueryClient,useMutation } from "@tanstack/react-query";
+import { toast } from 'react-toastify';
 import newRequest from "../../utils/newRequest";
 import { useNavigate } from "react-router-dom";
 const Add = () => {
@@ -26,9 +27,13 @@ const Add = () => {
         e.target.value = ''
     }
     const handleupload = async () => {
+        if (!singleFile && (!files || files.length === 0)) {
+            toast.warn("Please choose a cover image or media files before uploading.");
+            return;
+        }
         setUploading(true);
         try {
-            const cover = await upload(singleFile);
+            const cover = singleFile ? await upload(singleFile) : "";
 
             const images = await Promise.all(
                 [...files].map(async file => {
@@ -42,7 +47,10 @@ const Add = () => {
                     cover, images
                 }
             })
+            toast.success("Images uploaded successfully.");
         } catch (error) {
+            setUploading(false);
+            toast.error("Upload failed. Please try again.");
             console.log(error);
         }
     };
@@ -54,13 +62,21 @@ const Add = () => {
       return newRequest.post("/gigs", gig);
     },
     onSuccess:()=>{
-      queryClient.invalidateQueries(["myGigs"])
+      queryClient.invalidateQueries(["myGigs"]);
+      toast.success("Gig created successfully.");
+      navigate('/mygigs');
+    },
+    onError: () => {
+      toast.error("Gig creation failed. Please try again.");
     }
   });
     const handlesubmit=(e)=>{
         e.preventDefault();
+        if (!state.title || !state.desc || !state.price) {
+          toast.warn("Please fill the required gig fields before creating.");
+          return;
+        }
         mutation.mutate(state);
-        navigate('/mygigs')
     }
     return ([
         <div className="add">
@@ -107,6 +123,7 @@ const Add = () => {
                             type="text"
                             placeholder="e.g. One-page web design"
                             name="sortTitle"
+                            onChange={handlechange}
                         />
                         <label htmlFor="">Short Description</label>
                         <textarea

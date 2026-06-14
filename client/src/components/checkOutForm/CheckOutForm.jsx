@@ -4,6 +4,7 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
+import { toast } from 'react-toastify';
 import './checkOutForm.scss';
 const CheckoutForm = () => {
   const stripe = useStripe();
@@ -70,8 +71,11 @@ const CheckoutForm = () => {
     // redirected to the `return_url`.
     if (error.type === "card_error" || error.type === "validation_error") {
       setMessage(error.message);
+      toast.error(error.message);
     } else {
-      setMessage("An unexpected error occurred.");
+      const errorMessage = "An unexpected error occurred.";
+      setMessage(errorMessage);
+      toast.error(errorMessage);
     }
 
     setIsLoading(false);

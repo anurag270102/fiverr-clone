@@ -2,6 +2,7 @@ import React from "react";
 import './messages.scss';
 import { Link } from 'react-router-dom';
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
+import { toast } from 'react-toastify';
 import newRequest from "../../utils/newRequest";
 import moment from 'moment';
 const Messages = () => {
@@ -22,6 +23,10 @@ const Messages = () => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries(["conversations"]);
+            toast.success("Conversation marked as read.");
+        },
+        onError: () => {
+            toast.error("Could not mark conversation as read.");
         },
     });
 
