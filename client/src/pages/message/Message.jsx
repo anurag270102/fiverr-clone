@@ -22,6 +22,7 @@ const Message = () => {
         return res.data;
       }),
   });
+  console.log(currentUserData);
   const mutation = useMutation({
     mutationFn: (message) => {
       return newRequest.post(`/messages`, message);
