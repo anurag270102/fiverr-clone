@@ -22,8 +22,8 @@ const Reviews = ({ gigId }) => {
       queryClient.invalidateQueries(["reviews"]);
       toast.success("Review submitted successfully.");
     },
-    onError: () => {
-      toast.error("Failed to submit the review. Please try again.");
+    onError: (err) => {
+      toast.error(err.response?.data || "Unable to submit review. Please try again.");
     }
   });
   const handleSubmit = (e) => {

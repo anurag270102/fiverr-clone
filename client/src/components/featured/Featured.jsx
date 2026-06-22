@@ -26,10 +26,10 @@ function Featured() {
             </div>
             <div className="popular">
               <span>Popular:</span>
-              <button onClick={e=>navigate(`gigs?search=${e.target.innerHTML}`)}>Web Design</button>
-              <button onClick={e=>navigate(`gigs?search=${e.target.innerHTML}`)}>WordPress</button>
-              <button onClick={e=>navigate(`gigs?search=${e.target.innerHTML}`)}>Logo Design</button>
-              <button onClick={e=>navigate(`gigs?search=${e.target.innerHTML}`)}>AI Services</button>
+              <button onClick={e=>navigate(`gigs?cat=${e.target.innerHTML}`)}>Web Design</button>
+              <button onClick={e=>navigate(`gigs?cat=${e.target.innerHTML}`)}>WordPress</button>
+              <button onClick={e=>navigate(`gigs?cat=${e.target.innerHTML}`)}>Logo Design</button>
+              <button onClick={e=>navigate(`gigs?cat=${e.target.innerHTML}`)}>AI Services</button>
             </div>
           </div>
         </div>
