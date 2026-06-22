@@ -16,7 +16,6 @@ const Messages = () => {
                 return res.data;
             }),
     });
-    // console.log(data);
     const mutation = useMutation({
         mutationFn: (id) => {
             return newRequest.put(`/conversations/${id}`);
@@ -33,7 +32,6 @@ const Messages = () => {
     const handleRead = (id) => {
         mutation.mutate(id);
     };
-    //   console.log(currentUser);
     return ([
         <div className="messages">
             {isLoading ? "loading" : error ? "something went wrong" : <div className="container">
@@ -60,7 +58,6 @@ const Messages = () => {
                                 }
                                 key={c.id}
                             >
-                                {/* {console.log(c)} */}
                                 <td>{currentUser.isSeller ? c.buyerId : c.sellerId}</td>
                                 <td>
                                     {/* <Link to={`/message/${c.id}`} className="link">

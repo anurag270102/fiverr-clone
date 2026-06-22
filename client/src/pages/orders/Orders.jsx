@@ -38,7 +38,6 @@ const Orders = () => {
             }
         }
     }
-    console.log(data);
     return ([
         <div className="orders">
             {isLoading ? "loading" : error ? "something went wrong" : <div className="container">
