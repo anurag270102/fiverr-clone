@@ -22,6 +22,7 @@ const Message = () => {
         return res.data;
       }),
   });
+  console.log(currentUserData);
   const mutation = useMutation({
     mutationFn: (message) => {
       return newRequest.post(`/messages`, message);
@@ -34,7 +35,6 @@ const Message = () => {
       toast.error("Unable to send message. Please try again.");
     },
   });
-  console.log(currentUserData);
   const handleSubmit = (e) => {
     e.preventDefault();
     const messageText = e.target[0].value.trim();
