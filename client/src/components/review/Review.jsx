@@ -14,7 +14,6 @@ const Review = ({ review }) => {
         }),
     },
   );
-  console.log(error);
   const handlelike=() => {
     setlike(true);
   }
