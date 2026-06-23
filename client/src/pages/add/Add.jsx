@@ -91,11 +91,12 @@ const Add = () => {
                             placeholder="e.g. I will do something I'm really good at"
                             onChange={handlechange}
                         />
-                        <select name="cat" id="cat" onChange={handlechange}>
-                            <option value="Design">Design</option>
-                            <option value="Web developer">Web Developer</option>
-                            <option value="Animation">Animation</option>
-                            <option value="Music">Music</option>
+                        <select name="cat" id="cat" defaultValue={''} onChange={handlechange}>
+                            <option value="">Select a category</option>
+                            <option value="Web Design">Web Design</option>
+                            <option value="WordPress">WordPress</option>
+                            <option value="Logo Design">Logo Design</option>
+                            <option value="AI Services">AI Services</option>
                         </select>
                         <div className="images">
                             <div className="imagesInputs">

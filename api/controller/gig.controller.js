@@ -50,7 +50,14 @@ export const getGigs = async (req, res, next) => {
         ...(q.max && { $lte: Number(q.max) }),
       },
     }),
-    ...(q.search && { title: { $regex: q.search, $options: "i" } }),
+    ...(q.search && {
+      $or: [
+        { title: { $regex: q.search, $options: "i" } },
+        { desc: { $regex: q.search, $options: "i" } },
+        { cat: { $regex: q.search, $options: "i" } },
+        { sortDesc: { $regex: q.search, $options: "i" } },
+      ],
+    }),
   };
   try {
     const gigs = await Gig.find(filters).sort({ [q.sort]: -1 });
