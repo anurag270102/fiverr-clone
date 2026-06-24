@@ -78,6 +78,10 @@ Update the following:
 * `MONGO=mongodb://mongo:27017/fiverr`
 * `JWT_KEY=your_secret_key`
 * `STRIPE=your_stripe_secret_key`
+* `JWT_REFRESH_KEY=12345`
+* `JWT_EXPIRES_IN=1h`
+* `JWT_REFRESH_EXPIRES_IN=7d`
+
 
 #### 📌 Frontend (`/client/.env`)
 
