@@ -3,11 +3,18 @@ import "./navbar.scss";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import newRequest from "../../utils/newRequest";
 import { toast } from "react-toastify";
+import { useContext } from "react";
+import { SocketContext } from "../../context/SocketContext";
+import socket from "../../utils/socket";
+
 const Navbar = () => {
   const [active, setactive] = useState(false);
   const [active1, setactive1] = useState(false);
   const [open, setopen] = useState(false);
   const { pathname } = useLocation();
+
+  const { notificationCount } = useContext(SocketContext);
+
   const isActive = () => {
     window.scrollY > 0 ? setactive(true) : setactive(false);
   };
@@ -29,8 +36,9 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
+      socket.disconnect();
       await newRequest.post("/auth/logout");
-      localStorage.setItem("currentUser", null);
+      localStorage.removeItem("currentUser");
       toast.success("Logged out successfully.");
       navigate("/");
     } catch (err) {
@@ -166,8 +174,15 @@ const Navbar = () => {
                   <Link className="link" key={9996} to="/orders">
                     Orders
                   </Link>
-                  <Link className="link" key={9995} to="/messages">
-                    Messages
+                  <Link className="link" to="/messages">
+                    <div className="messageLink">
+                      Messages
+                      {notificationCount > 0 && (
+                        <span className="notificationBadge">
+                          {notificationCount}
+                        </span>
+                      )}
+                    </div>
                   </Link>
                   <Link className="link" key={9993} onClick={handleLogout}>
                     Logout

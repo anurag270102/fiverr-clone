@@ -10,8 +10,14 @@ import messageRoute from "./routes/message.route.js";
 import authRoute from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import { createServer } from "http";
+import { initSocket } from "./utils/socket.js";
 
 const app = express();
+const server = createServer(app);
+
+initSocket(server);
+
 dotenv.config();
 mongoose.set("strictQuery", true);
 const connect = async () => {
@@ -43,7 +49,7 @@ app.use((err, req, res, next) => {
   return res.status(errorStatus).send(errorMessage);
 });
 //backend port number
-app.listen(8000, () => {
+server.listen(8000, () => {
   connect();
-  console.log("localserver running");
+  console.log("localServer running");
 });

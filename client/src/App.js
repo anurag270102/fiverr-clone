@@ -27,12 +27,15 @@ import {
 } from '@tanstack/react-query'
 import BecomeSeller from './components/becomeSeller/BecomeSeller';
 import BecomeSeller2 from './components/becomeSeller2/BecomeSeller2';
+import { SocketProvider } from './context/SocketContext.jsx';
+
 
 function App() {
   const queryClient = new QueryClient();
   const Layout = () => {
     return (
       <QueryClientProvider client={queryClient} key={55}>
+        <SocketProvider>
         <div className='app'>
           <Navbar key={3} />
           <Outlet key={5454} />
@@ -53,6 +56,7 @@ function App() {
             theme="light"
           />
         </div>
+        </SocketProvider>
       </QueryClientProvider>
     )
   }

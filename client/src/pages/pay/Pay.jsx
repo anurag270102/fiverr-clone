@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import CheckoutForm from "../../components/checkOutForm/CheckOutForm";
 import { toast } from 'react-toastify';
 const stripePromise = await loadStripe(
-  "your key"
+  "pk_test_51NdqY1SIBwqoPGvtFNv89jDQAf7jXsUsuxmJS7H3nIf9YIy6Ak1ic7FAnugfpjuBc8yNNMsGpZO8MKRPteV3YMHJ00agc28x8T"
   );
 
 const Pay = () => {

@@ -29,7 +29,7 @@ export const login = async (req, res, next) => {
         isSeller: user.isSeller,
       },
       process.env.JWT_KEY,
-      { expiresIn: process.env.JWT_EXPIRES_IN  }
+      { expiresIn: process.env.JWT_EXPIRES_IN }
     );
 
     // add refresh token logic here
@@ -39,7 +39,7 @@ export const login = async (req, res, next) => {
         isSeller: user.isSeller,
       },
       process.env.JWT_REFRESH_KEY,
-        { expiresIn: process.env.JWT_REFRESH_EXPIRES_IN }
+      { expiresIn: process.env.JWT_REFRESH_EXPIRES_IN }
     );
 
     const { password, ...info } = user._doc;
@@ -85,7 +85,7 @@ export const refreshToken = async (req, res, next) => {
       process.env.JWT_KEY,
       { expiresIn: process.env.JWT_EXPIRES_IN }
     );
-    res.cookie("accessToken", newAccessToken, { httpOnly: true,secure: true });
+    res.cookie("accessToken", newAccessToken, { httpOnly: true, secure: true });
     res.status(200).send({ message: "Access token refreshed successfully" });
   });
 };

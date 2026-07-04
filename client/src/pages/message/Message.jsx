@@ -1,20 +1,33 @@
 import React from "react";
-import './message.scss';
+import "./message.scss";
 import { Link, useParams } from "react-router-dom";
-import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
-import { toast } from 'react-toastify';
+import {
+  useQuery,
+  useQueryClient,
+  useMutation,
+  useInfiniteQuery,
+} from "@tanstack/react-query";
+import { toast } from "react-toastify";
 import newRequest from "../../utils/newRequest";
+import { useRef,useEffect } from "react";
 const Message = () => {
   const { id } = useParams();
   const queryClient = useQueryClient();
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-  const { isLoading, error, data } = useQuery({
-    queryKey: ["messages"],
-    queryFn: () =>
-      newRequest.get(`/messages/${id}`).then((res) => {
-        return res.data;
-      }),
-  });
+  const messageRef = useRef();
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ["messages", id],
+
+      queryFn: ({ pageParam = 1 }) =>
+        newRequest
+          .get(`/messages/${id}?page=${pageParam}&limit=20`)
+          .then((res) => res.data),
+
+      getNextPageParam: (lastPage, pages) => {
+        return lastPage.hasMore ? pages.length + 1 : undefined;
+      },
+    });
   const { data: currentUserData } = useQuery({
     queryKey: ["seller"],
     queryFn: () =>
@@ -22,6 +35,8 @@ const Message = () => {
         return res.data;
       }),
   });
+  const messages = data?.pages.flatMap((page) => page.messages) ?? [];
+
   console.log(currentUserData);
   const mutation = useMutation({
     mutationFn: (message) => {
@@ -48,31 +63,70 @@ const Message = () => {
     });
     e.target[0].value = "";
   };
-  return ([
-    <div className="message">
+
+  useEffect(() => {
+    if (!messageRef.current) return;
+
+    messageRef.current.scrollTop =
+        messageRef.current.scrollHeight;
+}, [messages.length]);
+
+  const handleScroll = async () => {
+    const div = messageRef.current;
+
+    if (div.scrollTop === 0 && hasNextPage && !isFetchingNextPage) {
+      const oldHeight = div.scrollHeight;
+
+      await fetchNextPage();
+
+      requestAnimationFrame(() => {
+        const newHeight = div.scrollHeight;
+
+        div.scrollTop = newHeight - oldHeight;
+      });
+    }
+  };
+  return [
+    <div className="message" >
       <div className="container">
         <span className="breadcrumbs">
-          <Link to='/messages' className="link" >MESSAGES</Link> &gt { };
+          <Link to="/messages" className="link">
+            MESSAGES
+          </Link>
         </span>
-        {isLoading ? "Loading" : error ? "something wnt wrong" : <div className="messages">
-          {data.map((m) => (
-            <div className={m.userId === currentUser._id ? "owner item" : "item"} key={m._id}>
+
+        <div className="messages" ref={messageRef} onScroll={handleScroll}>
+          {messages.map((m) => (
+            <div
+              className={m.userId === currentUser._id ? "owner item" : "item"}
+              key={m._id}
+            >
               <img
-                src={m.userId === currentUser._id ? `/images/noavtar.jpeg` : '/images/noavtar.jpeg'}
+                src={
+                  m.userId === currentUser._id
+                    ? `/images/noavtar.jpeg`
+                    : "/images/noavtar.jpeg"
+                }
                 alt=""
               />
-              <p>
-                {m.desc}
-              </p>
-            </div>))}
-        </div>}
+              <p>{m.desc}</p>
+            </div>
+          ))}
+        </div>
+
         <hr />
         <form className="write" onSubmit={handleSubmit}>
-          <textarea name="" id="" placeholder="write a message" cols="30" rows="10"></textarea>
+          <textarea
+            name=""
+            id=""
+            placeholder="write a message"
+            cols="30"
+            rows="10"
+          ></textarea>
           <button type="submit">Send</button>
         </form>
       </div>
-    </div>
-  ]);
-}
+    </div>,
+  ];
+};
 export default Message;
